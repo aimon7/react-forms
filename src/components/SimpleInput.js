@@ -6,7 +6,8 @@ const SimpleInput = (props) => {
     const nameInputRef = useRef();
     // State is better when you need validation in every keystroke and to reset the field
     const [enteredName, setEnteredName] = useState('');
-    const [enteredNameIsValid, setEnteredNameIsValid] = useState(true);
+    const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
+    const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
     const nameInputChangeHandler = event => {
         setEnteredName(event.target.value);
@@ -14,6 +15,8 @@ const SimpleInput = (props) => {
 
     const formSubmissionHandler = event => {
         event.preventDefault();
+
+        setEnteredNameTouched(true);
 
         if (enteredName.trim() === '') {
             setEnteredNameIsValid(false);
@@ -32,7 +35,9 @@ const SimpleInput = (props) => {
         // but it is not ideal, because we are directly manipulating the DOM
     }
 
-    const nameInputClasses = enteredNameIsValid ? 'form-control' : 'form-control invalid'
+    const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
+    const nameInputClasses = nameInputIsInvalid ? 'form-control invalid' : 'form-control'
 
     return (
         <form onSubmit={formSubmissionHandler}>
@@ -45,7 +50,7 @@ const SimpleInput = (props) => {
                     onChange={nameInputChangeHandler}
                     value={enteredName}
                 />
-                {!enteredNameIsValid && <p className="error-text">Name must be not empty</p>}
+                {nameInputIsInvalid && <p className="error-text">Name must be not empty</p>}
             </div>
             <div className="form-actions">
                 <button>Submit</button>
