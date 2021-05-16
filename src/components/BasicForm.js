@@ -69,6 +69,7 @@ const BasicForm = (props) => {
                         onBlur={firstNameBlurHandler}
                         value={enteredFirstName}
                     />
+                    {firstNameInputHasError && <p className="error-text">First name must be not empty</p>}
                 </div>
                 <div className={lastNameInputClasses}>
                     <label htmlFor="lastName">Last Name</label>
@@ -80,6 +81,7 @@ const BasicForm = (props) => {
                         onBlur={lastNameBlurHandler}
                         value={enteredLastName}
                     />
+                    {lastNameInputHasError && <p className="error-text">Last name must be not empty</p>}
                 </div>
             </div>
             <div className={emailInputClasses}>
@@ -92,6 +94,7 @@ const BasicForm = (props) => {
                     onBlur={emailBlurHandler}
                     value={enteredEmail}
                 />
+                {emailInputHasError && <p className="error-text">Email must be not empty and in proper format</p>}
             </div>
             <div className="form-actions">
                 <button disabled={!formIsValid}>Submit</button>
